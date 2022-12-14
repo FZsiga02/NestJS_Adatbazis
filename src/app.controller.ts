@@ -22,13 +22,29 @@ export class AppController {
   @Render('index')
   async macskaListazas() {
     const [rows] = await db.execute(
-      'SELECT szem_szin, suly FROM macskak ORDER BY suly DESC'
+      'SELECT szem_szin, suly FROM macskak ORDER BY suly DESC',
     );
 
     return {
       macskak: rows,
-    }
-  };
+    };
+  }
 
+  @Get('macskak/new')
+  @Render('form')
+  newMacskaForm() {
+    return {};
+  }
+
+  @Post('macskak/new')
+  @Redirect()
+  async newMacska(@Body() macska: MacskaDto) {
+    const [result]: any = await db.execute(
+      'INSERT INTO macskak (szem_szin, suly) VALUES (?, ?)',
+      [macska.szemSzin, macska.suly],
+    );
+    return {
+      url: '/macskak/' + result.insertId,
+    };
+  }
 }
-

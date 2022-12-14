@@ -9,6 +9,7 @@
     <script src='main.js'></script>
 </head>
 <body>
+    <input type="text" placeholder="Írjon be egy szem színt">
     <table>
       <tr>
         <th>Szem szín</th>
@@ -16,11 +17,12 @@
       </tr>
       <% for (let m of macskak){ %>
         <tr>
-          <td><%= m.szemSzin %></td>
+          <td><%= m.szem_szin %></td>
           <td><%= m.suly %></td>
         </tr>
-          
         <% }; %>
     </table>
+
+    <a href="/macskak/new">Macska felvétele</a>
 </body>
 </html>
