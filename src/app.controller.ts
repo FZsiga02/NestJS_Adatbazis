@@ -20,14 +20,24 @@ export class AppController {
 
   @Get()
   @Render('index')
-  async macskaListazas() {
-    const [rows] = await db.execute(
-      'SELECT szem_szin, suly FROM macskak ORDER BY suly DESC',
-    );
+  async macskaListazas(@Query('szem_szin') szem_szin = '') {
+    if (szem_szin != '') {
+      const [rows] = await db.execute(
+        'SELECT szem_szin, suly FROM macskak WHERE szem_szin LIKE ?',
+        [szem_szin],
+      );
+      return {
+        macskak: rows,
+      };
+    } else {
+      const [rows] = await db.execute(
+        'SELECT szem_szin, suly FROM macskak ORDER BY suly DESC',
+      );
 
-    return {
-      macskak: rows,
-    };
+      return {
+        macskak: rows,
+      };
+    }
   }
 
   @Get('macskak/new')
@@ -39,12 +49,12 @@ export class AppController {
   @Post('macskak/new')
   @Redirect()
   async newMacska(@Body() macska: MacskaDto) {
-    const [result]: any = await db.execute(
+    const []: any = await db.execute(
       'INSERT INTO macskak (szem_szin, suly) VALUES (?, ?)',
       [macska.szemSzin, macska.suly],
     );
     return {
-      url: '/macskak/' + result.insertId,
+      url: '/',
     };
   }
 }

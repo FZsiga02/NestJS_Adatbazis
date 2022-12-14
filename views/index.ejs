@@ -9,7 +9,10 @@
     <script src='main.js'></script>
 </head>
 <body>
-    <input type="text" placeholder="Írjon be egy szem színt">
+  <form method="GET">
+    <input type="text" name="szem_szin" placeholder="Írjon be egy szem színt:">
+    <input type="submit" value="Keresés">
+</form>
     <table>
       <tr>
         <th>Szem szín</th>
@@ -23,6 +26,8 @@
         <% }; %>
     </table>
 
-    <a href="/macskak/new">Macska felvétele</a>
+    <form action="/macskak/new" method="GET">
+      <input type="submit" value="Macska felvétele">
+    </form>
 </body>
 </html>
